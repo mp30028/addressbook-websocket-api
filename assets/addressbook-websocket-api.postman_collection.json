@@ -1,0 +1,105 @@
+{
+	"info": {
+		"_postman_id": "8ff6dc82-4e94-4ebf-8943-def7bc81cd77",
+		"name": "addressbook-websocket-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get-all",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/persons/get-all",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"persons",
+						"get-all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "by-id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/persons/by-id/18",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"persons",
+						"by-id",
+						"18"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add-new",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstname\": \"Bob\",\r\n    \"lastname\": \"Dylan\",\r\n    \"dateOfBirth\": \"1954-05-24\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/persons/add-new",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"persons",
+						"add-new"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstname\": \"Bob\",\r\n    \"lastname\": \"Dylan\",\r\n    \"dateOfBirth\": \"1954-05-24\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/persons/delete/18",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"persons",
+						"delete",
+						"18"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
