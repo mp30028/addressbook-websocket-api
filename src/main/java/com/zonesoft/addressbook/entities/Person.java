@@ -3,7 +3,6 @@ package com.zonesoft.addressbook.entities;
 
 import java.time.LocalDate;
 import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -24,7 +23,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zonesoft.addressbook.events.forwarders.JpaEventForwarder;
 
-//import com.zonesoft.addressbook.events.PersistenceEventPublisherConfiguration;
 
 
 @Entity
@@ -83,7 +81,7 @@ public class Person {
 	//mappedBy to signal that this relationship is already mapped in OtherName.person field
     @OneToMany(mappedBy = "person", fetch = FetchType.EAGER, cascade = CascadeType.ALL) 
 	public List<OtherName> getOtherNames() {
-		return otherNames;
+		return this.otherNames;
 	}
 
 	public void setOtherNames(List<OtherName> otherNames) {
@@ -106,15 +104,5 @@ public class Person {
 		}
 		return json;
 	}
-	
-	
-//    @PostPersist
-//    @PostUpdate
-//    @PostRemove
-//    @PostLoad
-//    private void afterAnyUpdate() {
-//        LOGGER.info("[FROM Person.afterAnyUpdate] add/update/delete complete for PERSON: {} ", this.toString());
-//        listner.persistenceEventTriggered(new PersistenceEvent(this));
-//    }
 	
 }
