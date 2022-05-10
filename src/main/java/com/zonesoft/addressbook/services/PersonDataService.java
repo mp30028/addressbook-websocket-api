@@ -46,55 +46,30 @@ public class PersonDataService {
 		return savedPerson;
 	}
 	
-	private void fixUpPersonsOtherNames(Person person) {
+	@Transactional
+	public Person update(Person person) {
+		Person savedPerson = null;
 		if (Objects.nonNull(person)) {
-			if (Objects.nonNull(person.getOtherNames())) {
-				for (OtherName otherName : person.getOtherNames()) {
-					fixUpOtherNamesTypes(otherName);
-					otherName.setPerson(person);
+			if (Objects.nonNull(person.getId())) {
+				Optional<Person> returned = personRepository.findById(person.getId());
+				if (returned.isPresent()) {
+					fixUpPersonsOtherNames(person);
+					Person returnedPerson = returned.get();
+					returnedPerson.setFirstname(person.getFirstname());
+					returnedPerson.setLastname(person.getLastname());
+					returnedPerson.setDateOfBirth(person.getDateOfBirth());
+					returnedPerson.setOtherNames(person.getOtherNames());
+					savedPerson = personRepository.save(returnedPerson);
+				} else {
+					throwAddressBookException(String.format("The provided person has id=%s which could not be found in db. Update is not possible",person.getId()));
 				}
+			} else {
+				throwAddressBookException("The provided person has id set to null. Update is not possible");
 			}
+		} else {
+			throwAddressBookException("The provided person value is null. Update is not possible");
 		}
-	}
-
-	private void fixUpOtherNamesTypes(OtherName otherName) {
-		if (Objects.nonNull(otherName)) {
-			OtherNameType otherNameType = otherName.getOtherNameType();
-			if (Objects.nonNull(otherNameType)) {
-				if (Objects.nonNull(otherNameType.getId())){
-					Optional<OtherNameType> result  = otherNameTypeRepository.findById(otherNameType.getId());;
-					if (result.isEmpty()) {
-						String message = String.format("The provided OtherNameType.id = '%s' is invalid", otherNameType.getId()) ;
-						AddressbookException exception = new AddressbookException(message);
-						LOGGER.error(message);
-						throw new AddressbookException(exception);
-					}else {
-						otherNameType = result.get();
-						otherName.setOtherNameType(otherNameType);
-						LOGGER.debug("otherNameType of otherName verified and set. otherName = {}", otherName);
-					}
-				}else if(Objects.nonNull(otherNameType.getValue())){
-					Optional<OtherNameType> result  = getOtherNameTypeByValue(otherNameType.getValue());
-					if (result.isEmpty()) {
-						String message = String.format("The provided OtherNameType.value = '%s' is invalid", otherNameType.getValue()) ;
-						AddressbookException exception = new AddressbookException(message);
-						LOGGER.error(message);
-						throw new AddressbookException(exception);
-					}else {
-						otherNameType = result.get();
-						otherName.setOtherNameType(otherNameType);
-						LOGGER.debug("otherNameType of otherName verified and set. otherName = {}", otherName);
-					}
-				}else {
-					String message = String.format("OtherNameType is required but was not provided. otherName= '%s' is therefore invalid", otherName) ;
-					AddressbookException exception = new AddressbookException(message);
-					LOGGER.error(message);
-					throw new AddressbookException(exception);
-				}
-			}
-			LOGGER.warn("otherName is null");
-	}
-		
+		return savedPerson;
 	}
 
 	public void delete(Long id){	
@@ -110,4 +85,65 @@ public class PersonDataService {
 		}
 	}
 	
+	private void throwAddressBookException(String message) {
+		AddressbookException exception = new AddressbookException(message);
+		LOGGER.error(message);
+		throw new AddressbookException(exception);
+	}
+	
+	
+	private void fixUpPersonsOtherNames(Person person) {
+		if (Objects.nonNull(person)) {
+			if (Objects.nonNull(person.getOtherNames())) {
+				for (OtherName otherName : person.getOtherNames()) {
+					fixUpOtherNamesTypes(otherName);
+					otherName.setPerson(person);
+				}
+			}
+		}
+	}
+
+	private void fixUpOtherNamesTypes(OtherName otherName) {
+		if (Objects.nonNull(otherName)) {
+			OtherNameType otherNameType = otherName.getOtherNameType();
+			if (Objects.nonNull(otherNameType)) {
+				if (Objects.nonNull(otherNameType.getId())) {
+					Optional<OtherNameType> result = otherNameTypeRepository.findById(otherNameType.getId());
+					if (result.isEmpty()) {
+						String message = String.format("The provided OtherNameType.id = '%s' is invalid",
+								otherNameType.getId());
+						AddressbookException exception = new AddressbookException(message);
+						LOGGER.error(message);
+						throw new AddressbookException(exception);
+					} else {
+						otherNameType = result.get();
+						otherName.setOtherNameType(otherNameType);
+						LOGGER.debug("otherNameType of otherName verified and set. otherName = {}", otherName);
+					}
+				} else if (Objects.nonNull(otherNameType.getValue())) {
+					Optional<OtherNameType> result = getOtherNameTypeByValue(otherNameType.getValue());
+					if (result.isEmpty()) {
+						String message = String.format("The provided OtherNameType.value = '%s' is invalid",
+								otherNameType.getValue());
+						AddressbookException exception = new AddressbookException(message);
+						LOGGER.error(message);
+						throw new AddressbookException(exception);
+					} else {
+						otherNameType = result.get();
+						otherName.setOtherNameType(otherNameType);
+						LOGGER.debug("otherNameType of otherName verified and set. otherName = {}", otherName);
+					}
+				} else {
+					String message = String.format(
+							"OtherNameType is required but was not provided. otherName= '%s' is therefore invalid",
+							otherName);
+					AddressbookException exception = new AddressbookException(message);
+					LOGGER.error(message);
+					throw new AddressbookException(exception);
+				}
+			}
+		}else {
+			LOGGER.warn("otherName is null");
+		}
+	}
 }
