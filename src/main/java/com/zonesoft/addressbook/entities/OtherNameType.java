@@ -11,7 +11,7 @@ import javax.persistence.Table;
 @Table(name="t_other_name_type")
 public class OtherNameType {
 	private Long id;
-	private String other_name_type;
+	private String value;
 
 	public OtherNameType() {
 		super();
@@ -20,11 +20,11 @@ public class OtherNameType {
 	public OtherNameType(Long id, String other_name_type) {
 		super();
 		this.id = id;
-		this.other_name_type = other_name_type;
+		this.value = other_name_type;
 	}
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "other_name_type_id")
 	public Long getId() {
 		return this.id;
@@ -34,11 +34,12 @@ public class OtherNameType {
 		this.id = otherNameTypeId;
 	}
 
-	public String getOtherNameType() {
-		return this.other_name_type;
+	@Column(name = "other_name_type")
+	public String getValue() {
+		return this.value;
 	}
 
-	public void setOtherNameType(String other_name_type) {
-		this.other_name_type = other_name_type;
+	public void setValue(String value) {
+		this.value = value;
 	}
 }

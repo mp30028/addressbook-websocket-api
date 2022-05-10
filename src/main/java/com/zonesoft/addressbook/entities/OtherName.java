@@ -1,5 +1,8 @@
 package com.zonesoft.addressbook.entities;
 
+//import java.util.Objects;
+//import java.util.Optional;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,17 +20,20 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+//import static com.zonesoft.addressbook.utils.data_lookup.LookupOtherNameTypes.*;
+
+
 @Entity
 @Table(name="t_other_name")
 public class OtherName {
 	private static final Logger LOGGER = LoggerFactory.getLogger(OtherName.class);
 	private Long id;
-	private String otherName;
+	private String value;
 	private Person person;
 	private OtherNameType otherNameType;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "other_name_id")
 	public Long getId() {
 		return id;
@@ -37,12 +43,13 @@ public class OtherName {
 		this.id = id;
 	}
 
-	public String getOtherName() {
-		return this.otherName;
+	@Column(name = "other_name")
+	public String getValue() {
+		return this.value;
 	}
 
-	public void setOtherName(String otherName) {
-		this.otherName = otherName;
+	public void setValue(String otherName) {
+		this.value = otherName;
 	}
 
 	
@@ -72,6 +79,27 @@ public class OtherName {
 	}
 
 	public void setOtherNameType(OtherNameType otherNameType) {
+//		if (Objects.nonNull(otherNameType)) {
+//			if (Objects.nonNull(otherNameType.getId())){
+//				Optional<OtherNameType> result  = getOtherNameTypeById(otherNameType.getId());
+//				if (result.isEmpty()) {
+//					//should throw an exception really but for now ....
+//					otherNameType = null;
+//				}else {
+//					otherNameType = result.get();
+//				}
+//			}else if(Objects.nonNull(otherNameType.getValue())){
+//				Optional<OtherNameType> result  = getOtherNameTypeByValue(otherNameType.getValue());
+//				if (result.isEmpty()) {
+//					//should throw an exception really but for now ....
+//					otherNameType = null;
+//				}else {
+//					otherNameType = result.get();
+//				}
+//			}else {
+//				otherNameType = null;
+//			}
+//		}
 		this.otherNameType = otherNameType;
 	}
 

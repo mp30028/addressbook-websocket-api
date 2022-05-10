@@ -30,7 +30,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/persons/by-id/18",
+					"raw": "localhost:8080/persons/by-id/5",
 					"host": [
 						"localhost"
 					],
@@ -38,7 +38,7 @@
 					"path": [
 						"persons",
 						"by-id",
-						"18"
+						"5"
 					]
 				}
 			},
@@ -51,7 +51,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"firstname\": \"Bob\",\r\n    \"lastname\": \"Dylan\",\r\n    \"dateOfBirth\": \"1954-05-24\"\r\n}",
+					"raw": "{\r\n    \"firstname\": \"Notrigght\",\r\n    \"lastname\": \"Error\",\r\n    \"dateOfBirth\": \"1988-03-24\",\r\n        \"otherNames\": [\r\n            {\r\n                \"value\": \"Cool\",\r\n                \"otherNameType\": {\r\n                    \"id\": 6\r\n                }\r\n            },\r\n            {\r\n                \"value\": \"Cat\",\r\n                \"otherNameType\": {\r\n                    \"id\": 7\r\n                }\r\n            },\r\n                        {\r\n                \"value\": \"Boggz\",\r\n                \"otherNameType\": {\r\n                    \"value\": \"Nickname\"\r\n                }\r\n            }\r\n        ]\r\n\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -79,7 +79,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"firstname\": \"Bob\",\r\n    \"lastname\": \"Dylan\",\r\n    \"dateOfBirth\": \"1954-05-24\"\r\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -87,7 +87,7 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/persons/delete/18",
+					"raw": "localhost:8080/persons/delete/61",
 					"host": [
 						"localhost"
 					],
@@ -95,7 +95,7 @@
 					"path": [
 						"persons",
 						"delete",
-						"18"
+						"61"
 					]
 				}
 			},
