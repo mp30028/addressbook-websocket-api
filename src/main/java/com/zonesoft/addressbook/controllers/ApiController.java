@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zonesoft.addressbook.entities.Person;
-import com.zonesoft.addressbook.repositories.PersonRepository;
 import com.zonesoft.addressbook.services.PersonDataService;
 
 @RestController
@@ -42,6 +40,13 @@ public class ApiController {
 	public Person addNew(@RequestBody  Person person) {
 		LOGGER.debug("Adding new person {}", person.toString());
 		return personDataService.addNew(person);
+	}
+	
+	@PostMapping("/update")
+	@ResponseBody
+	public Person update(@RequestBody  Person person) {
+		LOGGER.debug("Updating person {}", person.toString());
+		return personDataService.update(person);
 	}
 	
 	@GetMapping("/by-id/{id}")
