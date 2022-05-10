@@ -4,10 +4,14 @@
 <meta charset="utf-8">
 <title>Profile notification client</title>
 <script src="/js/reconnecting-websocket.js"></script>
+<!-- Downloaded from https://github.com/joewalnes/reconnecting-websocket -->
 </head>
 <body>
 	<script>
-		var socket = new ReconnectingWebSocket('ws://localhost:8080/websockets/events');
+		const url = "ws://localhost:8080/websockets/events";
+		const protocols = null;
+		var socket = new ReconnectingWebSocket(url, protocols, {debug: true, reconnectInterval: 3000});
+// 		'debug: true' ===> messages are printed to console.debug()
 		socket.onopen = function(e) {
 			updateMessageArea("[open] Connection established");
 			socket.send('hello');  
